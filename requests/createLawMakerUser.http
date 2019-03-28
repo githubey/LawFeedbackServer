@@ -1,0 +1,11 @@
+POST http://localhost:8080/users/law_maker
+Content-Type: application/json
+
+{
+  "email": "adsf@gmail.com",
+  "password" : "adsf",
+  "name" : "오하은",
+  "jobId" : 1
+}
+
+###

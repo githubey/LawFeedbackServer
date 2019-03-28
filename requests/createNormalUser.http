@@ -1,0 +1,11 @@
+POST http://localhost:8080/users/normal
+Content-Type: application/json
+
+{
+  "email": "oha@gmail.com",
+  "password" : "adsf",
+  "nickname" : "oha",
+  "jobId" : 2
+}
+
+###
