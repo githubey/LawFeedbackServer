@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserService {
 
-    private static final Logger logger = LoggerFactory.getLogger("local");
+    private static final Logger logger = LoggerFactory.getLogger("UserService");
     private final UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
