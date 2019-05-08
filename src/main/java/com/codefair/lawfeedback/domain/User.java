@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -35,6 +37,10 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "job_id", updatable = false, insertable = false)
     private Job job;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Article> articleList = new ArrayList<>();
 
     @Builder
     public User(Long id, String email, String password, String name, String nickname, Long jobId, Job job) {
