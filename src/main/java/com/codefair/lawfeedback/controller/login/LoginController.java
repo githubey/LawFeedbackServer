@@ -16,12 +16,15 @@ public class LoginController {
 
     @PostMapping
     public ResponseEntity<LoginResponseTO> login(@RequestBody LoginTO loginTO) {
-        Long userId = loginService.login(loginTO);
+        LoginResponseTO loginResponseTO = loginService.login(loginTO);
+        if (loginResponseTO.getName() == null) {
+            loginResponseTO.setName("");
+        }
         ResponseEntity<LoginResponseTO> responseEntity;
-        if (userId != 0L) {
-            responseEntity = new ResponseEntity<>(new LoginResponseTO(userId, "Success"), HttpStatus.OK);
+        if (loginResponseTO.getUserId() != 0L) {
+            responseEntity = new ResponseEntity<>(loginResponseTO, HttpStatus.OK);
         } else {
-            responseEntity = new ResponseEntity<>(new LoginResponseTO(userId, "Authentification Error"), HttpStatus.UNAUTHORIZED);
+            responseEntity = new ResponseEntity<>(loginResponseTO, HttpStatus.UNAUTHORIZED);
         }
         return responseEntity;
     }
