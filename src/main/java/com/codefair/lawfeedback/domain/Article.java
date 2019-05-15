@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -13,7 +15,7 @@ import javax.persistence.*;
 public class Article {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "user_id", columnDefinition = "bigint", nullable = false)
@@ -35,6 +37,10 @@ public class Article {
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, insertable = false)
     private User user;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "article")
+    private List<RelatedJob> relatedJobList = new ArrayList<>();
 
     @Builder
     public Article(Long id, Long userId, String title, String content, Integer goodEx, Integer badEx) {
