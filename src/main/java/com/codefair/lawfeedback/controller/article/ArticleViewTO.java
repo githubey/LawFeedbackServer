@@ -1,6 +1,7 @@
 package com.codefair.lawfeedback.controller.article;
 
 import com.codefair.lawfeedback.domain.Article;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,8 @@ public class ArticleViewTO {
     private String content;
     private Integer good_ex;
     private Integer bad_ex;
+
+    @JsonProperty(value = "relatedJobInfoList")
     private List<RelatedJobTO> relatedJobTOList;
 
     public ArticleViewTO(Article article, List<RelatedJobTO> relatedJobTOList) {

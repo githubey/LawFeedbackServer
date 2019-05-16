@@ -26,7 +26,7 @@ public class ArticleController {
     }
 
     @GetMapping(value = "/{id}")
-    public ArticleViewTO getArticleWithAllInfo(@PathVariable String id) {
-        return null;
+    public ArticleViewTO getArticleWithAllInfo(@PathVariable Long id) {
+        return articleService.getArticleWithAllInfo(id);
     }
 }
