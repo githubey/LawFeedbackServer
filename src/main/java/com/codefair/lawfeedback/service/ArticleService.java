@@ -1,6 +1,8 @@
 package com.codefair.lawfeedback.service;
 
 import com.codefair.lawfeedback.controller.article.ArticleListItemTO;
+import com.codefair.lawfeedback.controller.article.ArticleViewTO;
+import com.codefair.lawfeedback.controller.article.RelatedJobTO;
 import com.codefair.lawfeedback.controller.article.WriteArticleTO;
 import com.codefair.lawfeedback.domain.Article;
 import com.codefair.lawfeedback.domain.RelatedJob;
@@ -41,5 +43,15 @@ public class ArticleService {
             RelatedJob relatedJob = new RelatedJob(jobId, article.getId());
             relatedJobRepository.save(relatedJob);
         }
+    }
+
+    @Transactional
+    public ArticleViewTO getArticleWithAllInfo(Long articleId) {
+        Article article = articleRepository.findById(articleId).orElseThrow();
+        List<RelatedJob> relatedJobList = relatedJobRepository.getAllByArticleId(articleId);
+
+        List<RelatedJobTO> relatedJobTOList = relatedJobList.stream().map(relatedJob -> new RelatedJobTO(relatedJob, relatedJob.getJob().getName())).collect(Collectors.toList());
+
+        return new ArticleViewTO(article, relatedJobTOList);
     }
 }

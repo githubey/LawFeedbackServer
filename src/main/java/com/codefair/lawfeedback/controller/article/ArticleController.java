@@ -24,4 +24,9 @@ public class ArticleController {
         articleService.writeArticle(writeArticleTO);
         return "{}";
     }
+
+    @GetMapping(value = "/{id}")
+    public ArticleViewTO getArticleWithAllInfo(@PathVariable Long id) {
+        return articleService.getArticleWithAllInfo(id);
+    }
 }
