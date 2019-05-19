@@ -10,11 +10,13 @@ import lombok.Setter;
 public class LoginResponseTO {
 
     private Long userId;
+    private Long jobId;
     private String name;
     private String message;
 
-    public LoginResponseTO(Long userId, String name, String message) {
+    public LoginResponseTO(Long userId, Long jobId, String name, String message) {
         this.userId = userId;
+        this.jobId = jobId;
         this.name = name;
         this.message = message;
     }

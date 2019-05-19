@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 public class Article {
 
     @Id
@@ -28,7 +30,7 @@ public class Article {
     private String content;
 
     @Column(columnDefinition = "int default 0", nullable = false, insertable = false)
-    private Integer goodEx = 0;
+    private Integer goodEx;
 
     @Column(columnDefinition = "int default 0", nullable = false, insertable = false)
     private Integer badEx;

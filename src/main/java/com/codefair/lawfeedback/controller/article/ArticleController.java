@@ -29,4 +29,9 @@ public class ArticleController {
     public ArticleViewTO getArticleWithAllInfo(@PathVariable Long id) {
         return articleService.getArticleWithAllInfo(id);
     }
+
+    @PutMapping(value = "/{id}")
+    public ArticleViewTO updateArticleWithVote(@PathVariable Long id, @RequestBody UpdateArticleVoteTO updateArticleVoteTO) {
+        return articleService.updateArticleWithVote(id, updateArticleVoteTO);
+    }
 }

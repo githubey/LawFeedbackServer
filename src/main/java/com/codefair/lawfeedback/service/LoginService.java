@@ -20,10 +20,10 @@ public class LoginService {
         LoginResponseTO loginResponseTO;
         User user = userRepository.findByEmail(loginTO.getEmail());
         if (user != null && bCryptPasswordEncoder.matches(loginTO.getPassword(), user.getPassword())) {
-            loginResponseTO = new LoginResponseTO(user.getId(), user.getName(), "Success");
+            loginResponseTO = new LoginResponseTO(user.getId(), user.getJobId(), user.getName(), "Success");
             LoggerFactory.getLogger("local").info("####LoginService(login) : Success " + user.getId());
         } else {
-            loginResponseTO = new LoginResponseTO(0L, "", "Authentification Error");
+            loginResponseTO = new LoginResponseTO(0L, 0L, "", "Authentification Error");
             LoggerFactory.getLogger("local").info("####LoginService(login) : Fail ");
         }
         return loginResponseTO;
