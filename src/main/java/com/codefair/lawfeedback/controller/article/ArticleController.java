@@ -2,6 +2,7 @@ package com.codefair.lawfeedback.controller.article;
 
 import com.codefair.lawfeedback.service.ArticleService;
 import lombok.AllArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,5 +29,11 @@ public class ArticleController {
     @GetMapping(value = "/{id}")
     public ArticleViewTO getArticleWithAllInfo(@PathVariable Long id) {
         return articleService.getArticleWithAllInfo(id);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ArticleViewTO updateArticleWithVote(@PathVariable Long id, @RequestBody UpdateArticleVoteTO updateArticleVoteTO) {
+        LoggerFactory.getLogger("ArticleController").info(id + " " + updateArticleVoteTO.getJobId() + " " + updateArticleVoteTO.getGood());
+        return new ArticleViewTO();
     }
 }
