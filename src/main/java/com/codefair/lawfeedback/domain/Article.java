@@ -28,7 +28,7 @@ public class Article {
     private String content;
 
     @Column(columnDefinition = "int default 0", nullable = false, insertable = false)
-    private Integer goodEx = 0;
+    private Integer goodEx;
 
     @Column(columnDefinition = "int default 0", nullable = false, insertable = false)
     private Integer badEx;
