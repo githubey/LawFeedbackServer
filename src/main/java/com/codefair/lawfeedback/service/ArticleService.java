@@ -1,9 +1,6 @@
 package com.codefair.lawfeedback.service;
 
-import com.codefair.lawfeedback.controller.article.ArticleListItemTO;
-import com.codefair.lawfeedback.controller.article.ArticleViewTO;
-import com.codefair.lawfeedback.controller.article.RelatedJobTO;
-import com.codefair.lawfeedback.controller.article.WriteArticleTO;
+import com.codefair.lawfeedback.controller.article.*;
 import com.codefair.lawfeedback.domain.Article;
 import com.codefair.lawfeedback.domain.RelatedJob;
 import com.codefair.lawfeedback.repository.ArticleRepository;
@@ -49,6 +46,27 @@ public class ArticleService {
     public ArticleViewTO getArticleWithAllInfo(Long articleId) {
         Article article = articleRepository.findById(articleId).orElseThrow();
         List<RelatedJob> relatedJobList = relatedJobRepository.getAllByArticleId(articleId);
+
+        List<RelatedJobTO> relatedJobTOList = relatedJobList.stream().map(relatedJob -> new RelatedJobTO(relatedJob, relatedJob.getJob().getName())).collect(Collectors.toList());
+
+        return new ArticleViewTO(article, relatedJobTOList);
+    }
+
+    @Transactional
+    public ArticleViewTO updateArticleWithVote(Long articleId, UpdateArticleVoteTO updateArticleVoteTO) {
+        Article article = articleRepository.findById(articleId).orElseThrow();
+        article.setGoodEx(article.getGoodEx() + updateArticleVoteTO.getGood());
+        article.setBadEx(article.getBadEx() + updateArticleVoteTO.getBad());
+
+        List<RelatedJob> relatedJobList = article.getRelatedJobList();
+        if (relatedJobList != null && relatedJobList.size() > 0) {
+            for (RelatedJob relatedJob : relatedJobList) {
+                if (relatedJob.getJobId().equals(updateArticleVoteTO.getJobId())) {
+                    relatedJob.setGood(relatedJob.getGood() + updateArticleVoteTO.getGood());
+                    relatedJob.setBad(relatedJob.getBad() + updateArticleVoteTO.getBad());
+                }
+            }
+        }
 
         List<RelatedJobTO> relatedJobTOList = relatedJobList.stream().map(relatedJob -> new RelatedJobTO(relatedJob, relatedJob.getJob().getName())).collect(Collectors.toList());
 

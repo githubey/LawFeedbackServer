@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 public class UpdateArticleVoteTO {
 
     private Long jobId;
-    private Long good;
-    private Long bad;
+    private Integer good;
+    private Integer bad;
 }
