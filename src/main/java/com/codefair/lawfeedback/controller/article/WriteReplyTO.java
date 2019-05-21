@@ -1,4 +1,4 @@
-package com.codefair.lawfeedback.controller.reply;
+package com.codefair.lawfeedback.controller.article;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class WriteReplyTO {
 
-    private Long articleId;
     private Long userId;
     private String replyContent;
 }
