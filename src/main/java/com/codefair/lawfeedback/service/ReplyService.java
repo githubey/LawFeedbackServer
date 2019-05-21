@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -30,7 +31,21 @@ public class ReplyService {
     public List<ReplyListItemTO> getReplyList(Long articleId, Boolean isRelatedView) {
         logger.info("getReplyList");
         List<Reply> replyList = replyRepository.findAllByArticleIdOrderByIdDesc(articleId);
-        return replyList.stream().map(reply -> new ReplyListItemTO(reply, reply.getUser().getJob().getName()))
+        Stream<Reply> replyStream;
+        if (isRelatedView) {
+            replyStream = replyList.stream()
+                    .filter(reply -> reply.getArticle().getRelatedJobList().stream()
+                            .map(relatedJob -> relatedJob.getJobId()).collect(Collectors.toSet())
+                            .contains(reply.getUser().getJobId()));
+        } else {
+            replyStream = replyList.stream()
+                    .filter(reply -> !reply.getArticle().getRelatedJobList().stream()
+                            .map(relatedJob -> relatedJob.getJobId()).collect(Collectors.toSet())
+                            .contains(reply.getUser().getJobId()));
+
+        }
+        return replyStream
+                .map(reply -> new ReplyListItemTO(reply, reply.getUser().getJob().getName()))
                 .collect(Collectors.toList());
     }
 }
