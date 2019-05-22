@@ -4,6 +4,9 @@ import com.codefair.lawfeedback.domain.Article;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @NoArgsConstructor
 @Getter
 public class ArticleListItemTO {
@@ -12,6 +15,7 @@ public class ArticleListItemTO {
     private Long userId;
     private String title;
     private String summary;
+    private Set<Long> jobIdSet;
 
     public ArticleListItemTO(Article article) {
         id = article.getId();
@@ -21,5 +25,6 @@ public class ArticleListItemTO {
         if (summary != null && summary.length() > 600) {
             summary = summary.substring(0, 600) + "...";
         }
+        jobIdSet = article.getRelatedJobList().stream().map(relatedJob -> relatedJob.getJobId()).collect(Collectors.toSet());
     }
 }

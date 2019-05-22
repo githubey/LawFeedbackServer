@@ -1,6 +1,7 @@
 package com.codefair.lawfeedback.controller.article;
 
 import com.codefair.lawfeedback.service.ArticleService;
+import com.codefair.lawfeedback.service.ReplyService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,8 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final ReplyService replyService;
+
 
     @GetMapping
     public List<ArticleListItemTO> getArticleList() {
@@ -33,5 +36,21 @@ public class ArticleController {
     @PutMapping(value = "/{id}")
     public ArticleViewTO updateArticleWithVote(@PathVariable Long id, @RequestBody UpdateArticleVoteTO updateArticleVoteTO) {
         return articleService.updateArticleWithVote(id, updateArticleVoteTO);
+    }
+
+    @PostMapping(value = "/{id}/comments")
+    private String writeReply(@PathVariable Long id, @RequestBody WriteReplyTO writeReplyTO) {
+        replyService.writeReply(id, writeReplyTO);
+        return "{}";
+    }
+
+    @GetMapping(value = "/{id}/comments")
+    public List<ReplyListItemTO> getReplyList(@PathVariable Long id, @RequestParam Boolean isRelatedView) {
+        return replyService.getReplyList(id, isRelatedView);
+    }
+
+    @PutMapping(value = "/{id}/comments/{commentId}")
+    public ReplyListItemTO voteReply(@PathVariable Long id, @PathVariable Long commentId, @RequestBody VoteReplyTO voteReplyTO) {
+        return replyService.voteReply(commentId, voteReplyTO);
     }
 }
