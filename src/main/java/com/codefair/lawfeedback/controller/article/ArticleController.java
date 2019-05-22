@@ -48,4 +48,9 @@ public class ArticleController {
     public List<ReplyListItemTO> getReplyList(@PathVariable Long id, @RequestParam Boolean isRelatedView) {
         return replyService.getReplyList(id, isRelatedView);
     }
+
+    @PutMapping(value = "/{id}/comments/{commentId}")
+    public ReplyListItemTO voteReply(@PathVariable Long id, @PathVariable Long commentId, @RequestBody VoteReplyTO voteReplyTO) {
+        return replyService.voteReply(commentId, voteReplyTO);
+    }
 }
